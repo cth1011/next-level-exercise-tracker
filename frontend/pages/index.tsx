@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 
-import NavBar from "@/components/Navbar";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
@@ -13,57 +13,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <section className="relative bg-[url('/images/pexels-anush-gorak-1431282.jpg')] bg-cover bg-center bg-no-repeat">
-        <div className="absolute inset-x-0 z-10">
-          <NavBar />
-        </div>
-
-        <div className="absolute inset-0 z-0 sm:to-black/15 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-black/75 sm:opacity-70"></div>
-
-        <div className="relative max-w-screen-xl px-4 py-32 mx-auto sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-          <div className="max-w-xl text-center sm:text-left">
-            <h1 className="font-extrabold text-white sm:text-5xl">
-              Achieve your strength goals with{" "}
-              <strong className="font-extrabold text-rose-700">
-                NextLevel
-              </strong>
-              .
-            </h1>
-
-            <p className="max-w-lg mt-4 text-white sm:text-xl sm:leading-relaxed">
-              Track your lifts, set personalized goals, and get expert guidance
-              to push through plateaus and achieve your best results.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mt-8 text-center">
-              <a
-                href="#"
-                className="block w-full px-12 py-3 text-sm font-medium text-white rounded shadow bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
-              >
-                Get Started
-              </a>
-
-              <a
-                href="#"
-                className="block w-full px-12 py-3 text-sm font-medium bg-white rounded shadow text-rose-600 hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-          <div>
-            <Image
-              src={
-                "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-              }
-              height={1000}
-              width={1000}
-              alt="app"
-            />
-          </div>
-        </div>
-      </section>
+      <Hero />
     </>
   );
 }
