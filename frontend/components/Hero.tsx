@@ -1,7 +1,7 @@
-import Head from "next/head";
 import Image from "next/image";
 
 import NavBar from "@/components/Navbar";
+import Link from "next/link";
 
 const Hero: React.FC = () => (
   <section className="relative h-[100vh] bg-[url('/images/pexels-anush-gorak-1431282.jpg')] bg-cover bg-center bg-no-repeat">
@@ -24,22 +24,22 @@ const Hero: React.FC = () => (
         </p>
 
         <div className="mt-8 flex flex-wrap gap-4 text-center">
-          <a
+          <Link
             href="#"
             className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
           >
             Get Started
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="#"
             className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
           >
             Learn More
-          </a>
+          </Link>
         </div>
       </div>
-      <div className="hidden sm:block">
+      <div className="hidden lg:block">
         <Image
           src={
             "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
