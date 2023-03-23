@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+
 import NavBar from "@/components/Navbar";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
           <NavBar />
         </div>
 
-        <div className="absolute inset-0 z-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-black/75 sm:to-black/15 sm:opacity-70"></div>
+        <div className="absolute inset-0 z-0 sm:to-black/15 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-black/75 sm:opacity-70"></div>
 
         <div className="relative max-w-screen-xl px-4 py-32 mx-auto sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
           <div className="max-w-xl text-center sm:text-left">
