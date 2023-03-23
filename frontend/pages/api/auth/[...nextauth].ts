@@ -13,9 +13,6 @@ const authOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
 };
 //
 export default NextAuth(authOptions);
