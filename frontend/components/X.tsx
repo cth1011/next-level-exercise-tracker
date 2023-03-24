@@ -1,5 +1,3 @@
-import React, { MouseEventHandler } from "react";
-
 interface IX {
   onClick: () => void;
 }
