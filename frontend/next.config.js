@@ -9,6 +9,11 @@ const nextConfig = {
         port: "",
         pathname: "/blocks/marketing-ui/hero/phone-mockup.png",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+      },
     ],
   },
 };
