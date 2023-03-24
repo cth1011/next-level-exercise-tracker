@@ -1,10 +1,25 @@
+import { useEffect } from "react";
+
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 
+import { useSession } from "next-auth/react";
+
+import ExerciseApp from "./app";
 import Hero from "@/components/Hero";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/app");
+    }
+  }, [status]);
+
   return (
     <>
       <Head>
