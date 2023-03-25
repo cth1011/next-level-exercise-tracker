@@ -7,6 +7,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import Sidebar from "@/components/Sidebar";
 import UserMenu from "@/components/UserMenu";
+import Avatar from "./Avatar";
 
 interface Props {
   children: React.ReactNode;
@@ -15,10 +16,11 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
   const ref = useRef<HTMLDivElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [userMenu, setUserMenu] = useState<Boolean>(false);
   const [drawer, setDrawer] = useState<Boolean>(false);
 
+  const authenticated = status === "authenticated";
   useOnClickOutside(drawerRef, () => {
     setDrawer(false);
   });
@@ -60,13 +62,19 @@ const Layout: React.FC<Props> = ({ children }) => {
                     onClick={() => setUserMenu(!userMenu)}
                   >
                     <span className="sr-only">Open user menu</span>
-                    <Image
-                      className="w-8 h-8 rounded-full"
-                      src={session?.user?.image!}
-                      alt="user photo"
-                      width={100}
-                      height={100}
-                    />
+                    {authenticated ? (
+                      <Image
+                        className="w-8 h-8 rounded-full"
+                        src={session?.user?.image!}
+                        alt="user photo"
+                        width={100}
+                        height={100}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-8 h-8 border rounded-full ve bg-slate-700">
+                        <Avatar />
+                      </div>
+                    )}
                   </button>
                   <UserMenu open={userMenu} setOpen={setUserMenu} />
                 </div>
