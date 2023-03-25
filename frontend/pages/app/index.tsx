@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 
+import Dashboard from "./dashboard";
+
 const ExerciseApp: React.FC = () => {
-  return <Layout>yey</Layout>;
+  return <Dashboard />;
 };
 
 export default ExerciseApp;
