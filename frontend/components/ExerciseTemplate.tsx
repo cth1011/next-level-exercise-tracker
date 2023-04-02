@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MoreIcon from "./icons/MoreIcon";
+import Modal from "./Modal";
 
 export interface IExerciseTemplate {
   exercises: [number, string][];
@@ -32,10 +33,10 @@ const ExerciseTemplate = ({
               <Link href="/">Edit Workout</Link>
             </li>
             <li>
-              <button>Rename</button>
+              <label htmlFor="rename">Rename</label>
             </li>
             <li>
-              <button>Delete</button>
+              <label htmlFor="delete">Delete</label>
             </li>
           </ul>
         </div>
@@ -50,6 +51,23 @@ const ExerciseTemplate = ({
           </div>
         ))}
       </span>
+      <Modal id="rename" title="Rename Template">
+        <label className="label">
+          <span className="text-xs text-gray-500 label-text">
+            Template Name
+          </span>
+        </label>
+        <input
+          type="text"
+          placeholder={workout_name}
+          className="w-full max-w-xs input-bordered input-primary input input-sm"
+        />
+      </Modal>
+      <Modal id="delete" title="Delete Template?" btnActionLabel="Delete">
+        <p>
+          Are you sure you want to delete this template? This cannot be undone.
+        </p>
+      </Modal>
     </div>
   );
 };
