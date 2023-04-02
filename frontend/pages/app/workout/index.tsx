@@ -57,10 +57,9 @@ const Workout = () => (
         </button>
       </div>
       <div className="w-full mt-2 md: md:flex md:space-x-2">
-        {FAKE_DATA.map(({ exercises, workout_name, date }, value) => (
-          <div key={`${workout_name}-${value}`} className="md:w-1/2">
+        {FAKE_DATA.map(({ exercises, workout_name, date }, index) => (
+          <div key={index} className="md:w-1/2">
             <ExerciseTemplate
-              key={`${workout_name}-${value}`}
               exercises={exercises as [number, string][]}
               workout_name={workout_name}
               date={date}
