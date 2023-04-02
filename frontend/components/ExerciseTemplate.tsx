@@ -45,8 +45,8 @@ const ExerciseTemplate = ({
         Last performed on: {date.toDateString()}
       </span>
       <span className="text-sm text-gray-500">
-        {exercises.map(([reps, exercise]) => (
-          <div>
+        {exercises.map(([reps, exercise], index) => (
+          <div key={index}>
             {reps} x {exercise}
           </div>
         ))}
