@@ -60,6 +60,7 @@ const Workout = () => (
         {FAKE_DATA.map(({ exercises, workout_name, date }, value) => (
           <div key={`${workout_name}-${value}`} className="md:w-1/2">
             <ExerciseTemplate
+              key={`${workout_name}-${value}`}
               exercises={exercises as [number, string][]}
               workout_name={workout_name}
               date={date}
