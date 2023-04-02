@@ -71,7 +71,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                         height={100}
                       />
                     ) : (
-                      <div className="flex items-center justify-center w-8 h-8 border rounded-full ve bg-slate-700">
+                      <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-700">
                         <Avatar />
                       </div>
                     )}
