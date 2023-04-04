@@ -4,11 +4,10 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
-import HamburgerMenu from "@/components/HamburgerMenu";
 import Sidebar from "@/components/Sidebar";
 import UserMenu from "@/components/UserMenu";
-import Avatar from "./Avatar";
-
+import Avatar from "@/icons/Avatar";
+import HamburgerMenu from "@/icons/HamburgerMenu";
 interface Props {
   children: React.ReactNode;
 }
@@ -84,7 +83,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         </div>
       </nav>
 
-      <div className="mt-12 sm:ml-64">
+      <div className="mt-12 sm:ml-64 ">
         <div className="p-4">{children}</div>
       </div>
     </>

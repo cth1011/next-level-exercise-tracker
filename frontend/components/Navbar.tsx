@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import HamburgerMenu from "@/icons/HamburgerMenu";
 import X from "@/icons/X";
-import HamburgerMenu from "@/components/HamburgerMenu";
 
 export default function NavBar() {
   const { data: session, status } = useSession();
