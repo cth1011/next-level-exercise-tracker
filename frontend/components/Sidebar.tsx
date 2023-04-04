@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useRef } from "react";
-import Avatar from "@/components/Avatar";
+import Avatar from "@/icons/Avatar";
 import Link from "next/link";
 
 interface ISidebar {
