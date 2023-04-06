@@ -84,7 +84,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       </nav>
 
       <div className="mt-12 sm:ml-64 ">
-        <div className="p-4">{children}</div>
+        <div className="p-4 text-gray-900">{children}</div>
       </div>
     </>
   );

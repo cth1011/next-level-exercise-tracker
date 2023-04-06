@@ -1,12 +1,7 @@
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import Layout from "@/components/Layout";
-
-import Dashboard from "./dashboard";
+import Workout from "@/pages/app/workout";
 
 const ExerciseApp: React.FC = () => {
-  return <Dashboard />;
+  return <Workout />;
 };
 
 export default ExerciseApp;
