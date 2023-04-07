@@ -6,6 +6,7 @@ import { useOnClickOutside } from "usehooks-ts";
 
 import Sidebar from "@/components/Sidebar";
 import UserMenu from "@/components/UserMenu";
+
 import Avatar from "@/icons/Avatar";
 import HamburgerMenu from "@/icons/HamburgerMenu";
 interface Props {
@@ -83,7 +84,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         </div>
       </nav>
 
-      <div className="mt-12 sm:ml-64 ">
+      <div className="mt-14 sm:ml-64 ">
         <div className="p-4 text-gray-900">{children}</div>
       </div>
     </>
