@@ -44,7 +44,7 @@ const UserMenu = ({ open, setOpen }: IUserMenu) => {
             onClick={(e) => {
               e.preventDefault();
               signOut();
-              router.push("/app");
+              router.push("/");
             }}
           >
             Sign out
