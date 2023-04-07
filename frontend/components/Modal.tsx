@@ -22,7 +22,7 @@ const Modal = ({ id, btnActionLabel, title, onClick, children }: IModal) => (
 
           <label
             htmlFor={id}
-            onClick={() => onClick()}
+            onClick={onClick}
             className="btn-ghost btn-sm btn text-rose-700"
           >
             {btnActionLabel || "OK"}
