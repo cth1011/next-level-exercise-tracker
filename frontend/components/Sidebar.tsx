@@ -16,7 +16,7 @@ const Sidebar = ({ open, setOpen }: ISidebar) => {
     >
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white ">
         <ul className="space-y-2">
-          <li>
+          {/* <li>
             <Link
               href="/app/dashboard"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 "
@@ -33,7 +33,7 @@ const Sidebar = ({ open, setOpen }: ISidebar) => {
               </svg>
               <span className="ml-3">Dashboard</span>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               href="/app/exercises"
@@ -49,9 +49,6 @@ const Sidebar = ({ open, setOpen }: ISidebar) => {
                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
               </svg>
               <span className="flex-1 ml-3 whitespace-nowrap">Exercises</span>
-              <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full ">
-                Pro
-              </span>
             </Link>
           </li>
           <li>
@@ -75,7 +72,7 @@ const Sidebar = ({ open, setOpen }: ISidebar) => {
               </span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="/app/profile"
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 "
@@ -83,7 +80,7 @@ const Sidebar = ({ open, setOpen }: ISidebar) => {
               <Avatar />
               <span className="flex-1 ml-3 whitespace-nowrap">Profile</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </aside>
