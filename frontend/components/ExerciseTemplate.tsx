@@ -1,75 +1,81 @@
-import Link from "next/link";
-import MoreIcon from "./icons/MoreIcon";
-import Modal from "./Modal";
+import MoreIcon from "@/icons/MoreIcon";
+import { Exercise } from "@/types/session";
 
-export interface IExerciseTemplate {
-  exercises: [number, string][];
-  date: Date;
-  workout_name: string;
-}
-
-const ExerciseTemplate = ({
-  exercises,
-  date,
-  workout_name,
-}: IExerciseTemplate) => {
-  return (
-    <div className=" mb-2 h-full cursor-pointer rounded-lg border border-gray-300 bg-white py-2.5 pl-5 pr-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200">
-      <div className="flex items-center justify-between">
-        <span className="text-lg font-bold">{workout_name}</span>
-        <div className="dropdown-end dropdown">
-          <button
-            tabIndex={0}
-            type="button"
-            className="btn-ghost btn-xs btn-circle btn"
-          >
-            <MoreIcon />
-          </button>
-          <ul
-            tabIndex={0}
-            className="py-1 shadow dropdown-content menu rounded-box w-52 bg-base-100"
-          >
-            <li>
-              <Link href="/">Edit Workout</Link>
-            </li>
-            <li>
-              <label htmlFor="rename">Rename</label>
-            </li>
-            <li>
-              <label htmlFor="delete">Delete</label>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <span className="text-sm text-gray-500">
-        Last performed on: {date.toDateString()}
-      </span>
-      <span className="text-sm text-gray-500">
-        {exercises.map(([reps, exercise], index) => (
-          <div key={index}>
-            {reps} x {exercise}
-          </div>
-        ))}
-      </span>
-      <Modal id="rename" title="Rename Template">
-        <label className="label">
-          <span className="text-xs text-gray-500 label-text">
-            Template Name
-          </span>
-        </label>
-        <input
-          type="text"
-          placeholder={workout_name}
-          className="w-full max-w-xs input-bordered input-primary input input-sm"
-        />
-      </Modal>
-      <Modal id="delete" title="Delete Template?" btnActionLabel="Delete">
-        <p>
-          Are you sure you want to delete this template? This cannot be undone.
-        </p>
-      </Modal>
-    </div>
-  );
+type Props = {
+  exercise: Exercise;
 };
+
+const ExerciseTemplate = ({ exercise }: Props) => (
+  <div className="w-full overflow-x-auto rounded-lg border border-gray-300 bg-white py-2.5 pl-5 pr-2 text-sm font-medium">
+    <div className="flex items-center justify-between">
+      <span className="text-lg font-bold text-rose-700">{exercise.name}</span>
+      <div className="dropdown dropdown-end">
+        <button
+          tabIndex={0}
+          type="button"
+          className="btn-ghost btn-xs btn-circle btn"
+        >
+          <MoreIcon color="text-rose-700" />
+        </button>
+        <ul
+          tabIndex={0}
+          className="py-1 shadow dropdown-content menu rounded-box w-52 bg-base-100"
+        >
+          <li>
+            <label htmlFor={`rename-${exercise.name}`}>Replace Exercise</label>
+          </li>
+          <li>
+            <label htmlFor={`adjust-${exercise.name}`}>Remove Exercise</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <table className="table w-full text-center table-compact">
+      <thead>
+        <tr>
+          <th className="bg-white">SET</th>
+          <th className="bg-white">PREVIOUS</th>
+          <th className="bg-white">(+{exercise.unit || "lbs"})</th>
+          <th className="bg-white">REPS</th>
+          <th className="bg-white"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {exercise.sets?.map((set, index) => (
+          <tr key={index}>
+            <td className="border-0">{set.set_no}</td>
+            <td className="border-0">{set.previous || "-"}</td>
+            <td className="border-0">
+              <input
+                type="number"
+                placeholder={set.weight.toString() || "0"}
+                className="input-bordered input input-sm max-w-[50px] border-gray-500"
+              />
+            </td>
+            <td className="border-0">
+              {" "}
+              <input
+                type="number"
+                placeholder={set.reps.toString() || "0"}
+                className="input-bordered input input-sm max-w-[50px] border-gray-500"
+              />
+            </td>
+            <td className="border-0">
+              <label>
+                <input type="checkbox" className="checkbox-primary checkbox" />
+              </label>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <button
+      type="button"
+      className="w-full mt-2 btn-ghost no-animation btn text-rose-700 "
+    >
+      Add Set
+    </button>
+  </div>
+);
 
 export default ExerciseTemplate;

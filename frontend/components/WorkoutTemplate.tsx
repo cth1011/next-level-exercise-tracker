@@ -6,7 +6,7 @@ import Modal from "./Modal";
 
 import type { Template } from "@/types/session";
 import React from "react";
-import { useTemplateStore } from "@/hooks/useTemplateStore";
+import { useWorkoutStore } from "@/hooks/useWorkoutStore";
 
 type Props = {
   template: Template;
@@ -17,8 +17,9 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
   const { last_date_performed, workout_name, template_id, exercises } =
     template;
   const [name, setName] = useState<string>(workout_name);
-  const setTemplateName = useTemplateStore((state) => state.setTemplateName);
-  const deleteTemplate = useTemplateStore((state) => state.deleteTemplate);
+
+  const deleteTemplate = useWorkoutStore((state) => state.deleteTemplate);
+  const setTemplateName = useWorkoutStore((state) => state.setTemplateName);
   return (
     <div
       className="mb-2 h-full cursor-pointer rounded-lg border border-gray-300 bg-white py-2.5 pl-5 pr-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
@@ -26,7 +27,7 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
     >
       <div className="flex items-center justify-between">
         <span className="text-lg font-bold">{workout_name}</span>
-        <div className="dropdown-end dropdown">
+        <div className="dropdown dropdown-end">
           <button
             tabIndex={0}
             type="button"
@@ -42,7 +43,7 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
               <Link href="/">Edit Workout</Link>
             </li>
             <li>
-              <label htmlFor={`remake-${template_id}`}>Rename</label>
+              <label htmlFor={`rename-${template_id}`}>Rename</label>
             </li>
             <li>
               <label htmlFor={`delete-${template_id}`}>Delete</label>
@@ -51,17 +52,19 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
         </div>
       </div>
       <span className="text-sm text-gray-500">
-        Last performed on: {last_date_performed.toDateString()}
+        {last_date_performed && (
+          <> Last performed on: {last_date_performed.toDateString()}</>
+        )}
       </span>
       <span className="text-sm text-gray-500">
-        {exercises?.map(({ exercise_name, reps }, index) => (
+        {exercises?.map(({ name, sets }, index) => (
           <div key={index}>
-            {reps} x {exercise_name}
+            {sets?.length} x {name}
           </div>
         ))}
       </span>
       <Modal
-        id={`remake-${template_id}`}
+        id={`rename-${template_id}`}
         title="Rename Template"
         onClick={() => setTemplateName(template_id, name)}
       >
