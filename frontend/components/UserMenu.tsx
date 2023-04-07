@@ -1,6 +1,7 @@
 import { ForwardedRef, Dispatch, SetStateAction } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useOnClickOutside } from "usehooks-ts";
 interface IUserMenu {
   open: Boolean;
@@ -9,7 +10,7 @@ interface IUserMenu {
 
 const UserMenu = ({ open, setOpen }: IUserMenu) => {
   const { data: session } = useSession();
-
+  const router = useRouter();
   return (
     <div
       className={`absolute right-0 top-12 z-50 my-4 ${
@@ -43,6 +44,7 @@ const UserMenu = ({ open, setOpen }: IUserMenu) => {
             onClick={(e) => {
               e.preventDefault();
               signOut();
+              router.push("/app");
             }}
           >
             Sign out
