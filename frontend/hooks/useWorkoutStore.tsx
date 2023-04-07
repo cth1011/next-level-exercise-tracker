@@ -20,6 +20,7 @@ type WorkoutState = {
   setExercisePageStatus: (status: ExercisePageStatus) => void;
   setWorkoutStatus: (status: WorkoutStatus) => void;
   setWorkoutSession: (session: Template) => void;
+  setWorkoutRename: (newName: string) => void;
 };
 
 export const useWorkoutStore = create<WorkoutState>((set) => ({
@@ -53,4 +54,9 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
     set((state) => ({ ...state, workoutStatus: status })),
   setWorkoutSession: (session) =>
     set((state) => ({ ...state, workoutSession: session })),
+  setWorkoutRename: (newName) =>
+    set((state) => ({
+      ...state,
+      workoutSession: { ...state.workoutSession!, workout_name: newName },
+    })),
 }));

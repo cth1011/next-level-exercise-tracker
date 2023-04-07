@@ -6,8 +6,10 @@ import { EDIT, NOT_STARTED } from "@/constants";
 import { useWorkoutStore } from "@/hooks/useWorkoutStore";
 import MoreIcon from "@/icons/MoreIcon";
 import Exercises from "../exercises";
+import { useState } from "react";
 
 const StartWorkout: React.FC = () => {
+  const [name, setName] = useState<string>("");
   const router = useRouter();
   const exercisePageStatus = useWorkoutStore(
     (state) => state.exercisePageStatus
@@ -15,6 +17,7 @@ const StartWorkout: React.FC = () => {
   const setExercisePageStatus = useWorkoutStore(
     (state) => state.setExercisePageStatus
   );
+  const setWorkoutRename = useWorkoutStore((state) => state.setWorkoutRename);
   const setWorkoutStatus = useWorkoutStore((state) => state.setWorkoutStatus);
   const workoutSession = useWorkoutStore((state) => state.workoutSession);
 
@@ -92,7 +95,11 @@ const StartWorkout: React.FC = () => {
           </button>
         </div>
 
-        <Modal id={`rename`} title="Rename Workout">
+        <Modal
+          id={`rename`}
+          title="Rename Workout"
+          onClick={() => setWorkoutRename(name)}
+        >
           <label className="label">
             <span className="text-xs text-gray-500 label-text">
               Workout Name
@@ -102,6 +109,7 @@ const StartWorkout: React.FC = () => {
             type="text"
             placeholder={workoutSession?.workout_name || "Workout"}
             className="w-full max-w-xs input-bordered input-primary input input-sm"
+            onChange={(e) => setName(e.target.value)}
           />
         </Modal>
       </div>
