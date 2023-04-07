@@ -2,22 +2,29 @@ import WorkoutTemplate from "@/components/WorkoutTemplate";
 import Layout from "@/components/Layout";
 import AddIcon from "@/icons/AddIcon";
 import Link from "next/link";
-import { useTemplateStore } from "@/hooks/useTemplateStore";
+import { useRouter } from "next/router";
+import { useWorkoutStore } from "@/hooks/useWorkoutStore";
 import React from "react";
+import { IN_PROGRESS } from "@/constants";
 
 const Workout: React.FC = () => {
-  const templates = useTemplateStore((state) => state.templates);
+  const router = useRouter();
+  const setWorkoutStatus = useWorkoutStore((state) => state.setWorkoutStatus);
+  const setWorkoutSession = useWorkoutStore((state) => state.setWorkoutSession);
+  const templates = useWorkoutStore((state) => state.templates);
   return (
     <Layout>
       <div className="pt-4">
-        <Link href="/app/workout/start">
-          <button
-            type="button"
-            className="btn-primary no-animation btn block w-full sm:w-[250px]"
-          >
-            Start an Empty Workout
-          </button>
-        </Link>
+        <button
+          type="button"
+          className="btn-primary no-animation btn block w-full sm:w-[250px]"
+          onClick={() => {
+            setWorkoutStatus(IN_PROGRESS);
+            router.push("/app/workout/start");
+          }}
+        >
+          Start an Empty Workout
+        </button>
       </div>
       <div className="mt-2">
         <div className="flex items-center justify-between">
@@ -30,7 +37,14 @@ const Workout: React.FC = () => {
           {templates &&
             templates.map((template, index) => (
               <div key={index} className="md:w-1/2">
-                <WorkoutTemplate template={template} />
+                <WorkoutTemplate
+                  template={template}
+                  onClick={() => {
+                    setWorkoutStatus(IN_PROGRESS);
+                    setWorkoutSession(template);
+                    router.push("/app/workout/start");
+                  }}
+                />
               </div>
             ))}
         </div>
