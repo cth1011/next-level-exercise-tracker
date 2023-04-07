@@ -11,7 +11,6 @@ export type Exercise = {
   name: string;
   type: string;
   sets?: Set[];
-  unit?: Unit;
   muscle: string;
   equipment: string;
   difficulty: string;
@@ -27,4 +26,3 @@ export type Set = {
 
 export type WorkoutStatus = typeof NOT_STARTED | typeof IN_PROGRESS;
 export type ExercisePageStatus = typeof VIEW | typeof EDIT;
-export type Unit = "lbs" | "kg";

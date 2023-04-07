@@ -35,7 +35,7 @@ const ExerciseTemplate = ({ exercise }: Props) => (
         <tr>
           <th className="bg-white">SET</th>
           <th className="bg-white">PREVIOUS</th>
-          <th className="bg-white">(+{exercise.unit || "lbs"})</th>
+          <th className="bg-white">(+LBS)</th>
           <th className="bg-white">REPS</th>
           <th className="bg-white"></th>
         </tr>
