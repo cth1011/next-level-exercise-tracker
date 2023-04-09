@@ -26,13 +26,17 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
       onClick={onClick}
     >
       <div className="flex items-center justify-between">
-        <span className="text-lg font-bold">{workout_name}</span>
-        <div className="dropdown-end dropdown">
+        <h1 className="text-lg font-bold" data-testid="template-name">
+          {workout_name}
+        </h1>
+        <div
+          className="dropdown-end dropdown"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
             tabIndex={0}
             type="button"
             className="btn-ghost btn-xs btn-circle btn"
-            onClick={(e) => e.stopPropagation()}
           >
             <MoreIcon />
           </button>

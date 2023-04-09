@@ -1,7 +1,6 @@
 import WorkoutTemplate from "@/components/WorkoutTemplate";
 import Layout from "@/components/Layout";
 import AddIcon from "@/icons/AddIcon";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useWorkoutStore } from "@/hooks/useWorkoutStore";
 import React from "react";
@@ -33,10 +32,17 @@ const Workout: React.FC = () => {
             <AddIcon />
           </button>
         </div>
-        <div className="w-full mt-2 md: md:flex md:space-x-2">
+        <div
+          data-testid="templates"
+          className="w-full mt-2 md: md:flex md:space-x-2"
+        >
           {templates &&
             templates.map((template, index) => (
-              <div key={index} className="md:w-1/2">
+              <div
+                data-testid={`template-${index}`}
+                key={index}
+                className="md:w-1/2"
+              >
                 <WorkoutTemplate
                   template={template}
                   onClick={() => {
