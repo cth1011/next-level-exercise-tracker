@@ -6,7 +6,7 @@ import Modal from "./Modal";
 
 import type { Template } from "@/types/session";
 import React from "react";
-import { useWorkoutStore } from "@/hooks/useWorkoutStore";
+import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
 type Props = {
   template: Template;
@@ -42,7 +42,7 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
           </button>
           <ul
             tabIndex={0}
-            className="py-1 shadow dropdown-content menu rounded-box w-52 bg-base-100"
+            className="dropdown-content menu rounded-box w-52 bg-base-100 py-1 shadow"
           >
             <li>
               <Link href="/">Edit Workout</Link>
@@ -74,14 +74,14 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
         onClick={() => setTemplateName(template_id, name)}
       >
         <label className="label">
-          <span className="text-xs text-gray-500 label-text">
+          <span className="label-text text-xs text-gray-500">
             Template Name
           </span>
         </label>
         <input
           type="text"
           placeholder={workout_name}
-          className="w-full max-w-xs input-bordered input-primary input input-sm"
+          className="input-bordered input-primary input input-sm w-full max-w-xs"
           onChange={(e) => setName(e.target.value)}
         />
       </Modal>

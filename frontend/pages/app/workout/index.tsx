@@ -2,7 +2,7 @@ import WorkoutTemplate from "@/components/WorkoutTemplate";
 import Layout from "@/components/Layout";
 import AddIcon from "@/icons/AddIcon";
 import { useRouter } from "next/router";
-import { useWorkoutStore } from "@/hooks/useWorkoutStore";
+import { useWorkoutStore } from "@/stores/useWorkoutStore";
 import React from "react";
 import { IN_PROGRESS } from "@/constants";
 
@@ -34,7 +34,7 @@ const Workout: React.FC = () => {
         </div>
         <div
           data-testid="templates"
-          className="w-full mt-2 md: md:flex md:space-x-2"
+          className="md: mt-2 w-full md:flex md:space-x-2"
         >
           {templates &&
             templates.map((template, index) => (

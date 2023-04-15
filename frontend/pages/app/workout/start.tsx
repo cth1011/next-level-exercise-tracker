@@ -3,7 +3,7 @@ import ExerciseTemplate from "@/components/ExerciseTemplate";
 import Layout from "@/components/Layout";
 import Modal from "@/components/Modal";
 import { EDIT, NOT_STARTED } from "@/constants";
-import { useWorkoutStore } from "@/hooks/useWorkoutStore";
+import { useWorkoutStore } from "@/stores/useWorkoutStore";
 import MoreIcon from "@/icons/MoreIcon";
 import Exercises from "../exercises";
 import { useState } from "react";
@@ -30,9 +30,9 @@ const StartWorkout: React.FC = () => {
         <div className="flex justify-between py-2">
           <div className="flex items-center">
             <span className="text-lg font-bold ">
-              {workoutSession?.workout_name || "Workout"}
+              {workoutSession?.workout_name || "Workout maybe"}
             </span>
-            <div className="dropdown-right dropdown">
+            <div className="dropdown dropdown-right">
               <button
                 tabIndex={0}
                 type="button"
@@ -42,7 +42,7 @@ const StartWorkout: React.FC = () => {
               </button>
               <ul
                 tabIndex={0}
-                className="py-1 shadow dropdown-content menu rounded-box w-52 bg-base-100"
+                className="dropdown-content menu rounded-box w-52 bg-base-100 py-1 shadow"
               >
                 <li>
                   <label htmlFor={`rename`}>Rename Workout</label>
@@ -69,7 +69,7 @@ const StartWorkout: React.FC = () => {
           ))}
         </div>
 
-        <div className="items-center block w-full mt-4 space-y-2 sm:flex sm:space-y-0 sm:space-x-2">
+        <div className="mt-4 block w-full items-center space-y-2 sm:flex sm:space-x-2 sm:space-y-0">
           <button
             type="button"
             className="btn-ghost no-animation btn w-full text-rose-700 sm:hidden sm:w-[150px]"
@@ -101,14 +101,14 @@ const StartWorkout: React.FC = () => {
           onClick={() => setWorkoutRename(name)}
         >
           <label className="label">
-            <span className="text-xs text-gray-500 label-text">
+            <span className="label-text text-xs text-gray-500">
               Workout Name
             </span>
           </label>
           <input
             type="text"
             placeholder={workoutSession?.workout_name || "Workout"}
-            className="w-full max-w-xs input-bordered input-primary input input-sm"
+            className="input-bordered input-primary input input-sm w-full max-w-xs"
             onChange={(e) => setName(e.target.value)}
           />
         </Modal>

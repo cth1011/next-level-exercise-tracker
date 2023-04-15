@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import SearchField from "@/components/SearchField";
 import Select from "@/components/Select";
 import { EDIT, VIEW } from "@/constants";
-import { useWorkoutStore } from "@/hooks/useWorkoutStore";
+import { useWorkoutStore } from "@/stores/useWorkoutStore";
 import BackIcon from "@/icons/BackIcon";
 import React from "react";
 
@@ -31,7 +31,7 @@ const Exercises = () => {
         {exercisePageStatus === EDIT && (
           <button
             type="button"
-            className="btn-outline btn-xs btn-square btn"
+            className="btn-outline btn-square btn-xs btn"
             onClick={() => setExercisePageStatus(VIEW)}
           >
             <BackIcon />
@@ -83,14 +83,14 @@ const Exercises = () => {
           </tbody>
         </table>
         {exercisePageStatus === EDIT && (
-          <button className="fixed btn-primary btn-circle btn right-8 bottom-8">
+          <button className="btn-primary btn-circle btn fixed bottom-8 right-8">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="w-6 h-6"
+              className="h-6 w-6"
             >
               <path
                 stroke-linecap="round"
