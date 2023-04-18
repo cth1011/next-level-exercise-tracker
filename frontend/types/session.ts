@@ -1,11 +1,21 @@
 import { EDIT, IN_PROGRESS, NOT_STARTED, VIEW } from "@/constants";
 
 export type Template = {
-  template_id: number;
+  id: number;
   workout_name: string;
-  exercises: Exercise[];
+  exercises: TemplateExercise[];
   last_date_performed?: Date;
+  user_id: number;
 };
+
+export type TemplateExercise = {
+  id: number;
+  exercise_id: number;
+  sets: number;
+  template_id: number;
+  exercise: Exercise
+
+}
 
 export type Exercise = {
   name: string;

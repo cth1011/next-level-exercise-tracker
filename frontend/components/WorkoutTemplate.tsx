@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useMutation, useQueryClient } from "react-query"
 import Link from "next/link";
 import MoreIcon from "@/icons/MoreIcon";
 import Modal from "./Modal";
@@ -8,18 +8,29 @@ import type { Template } from "@/types/session";
 import React from "react";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
+import {deleteTemplate, updateTemplate } from "@/hooks/useTemplates";
+
 type Props = {
   template: Template;
   onClick: () => void;
 };
 
-const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
-  const { last_date_performed, workout_name, template_id, exercises } =
-    template;
-  const [name, setName] = useState<string>(workout_name);
 
-  const deleteTemplate = useWorkoutStore((state) => state.deleteTemplate);
-  const setTemplateName = useWorkoutStore((state) => state.setTemplateName);
+const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
+  const queryClient = useQueryClient()
+  const [name, setName] = useState<string>(template.workout_name);
+  const handleUpdateTemplate = useMutation({
+    mutationFn: updateTemplate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["templates"]})
+    }
+  })
+  const handleDeleteTemplate = useMutation({
+    mutationFn: deleteTemplate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["templates"]})
+    }
+  })
   return (
     <div
       className="mb-2 h-full cursor-pointer rounded-lg border border-gray-300 bg-white py-2.5 pl-5 pr-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
@@ -27,7 +38,7 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
     >
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-bold" data-testid="template-name">
-          {workout_name}
+          {template.workout_name}
         </h1>
         <div
           className="dropdown-end dropdown"
@@ -48,30 +59,33 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
               <Link href="/">Edit Workout</Link>
             </li>
             <li>
-              <label htmlFor={`rename-${template_id}`}>Rename</label>
+              <label htmlFor={`rename-${template.id}`}>Rename</label>
             </li>
             <li>
-              <label htmlFor={`delete-${template_id}`}>Delete</label>
+              <label htmlFor={`delete-${template.id}`}>Delete</label>
             </li>
           </ul>
         </div>
       </div>
       <span className="text-sm text-gray-500">
-        {last_date_performed && (
-          <> Last performed on: {last_date_performed.toDateString()}</>
+        {template.last_date_performed instanceof Date && (
+          <> Last performed on: {template.last_date_performed.toDateString()}</>
         )}
       </span>
       <span className="text-sm text-gray-500">
-        {exercises?.map(({ name, sets }, index) => (
-          <div key={index}>
-            {sets?.length} x {name}
-          </div>
-        ))}
+        {template.exercises?.map(({ exercise, sets }, index) => {
+          console.log(exercise);
+          return (
+            <div key={index}>
+              {sets} x {exercise.name}
+            </div>
+          );
+        })}
       </span>
       <Modal
-        id={`rename-${template_id}`}
+        id={`rename-${template.id}`}
         title="Rename Template"
-        onClick={() => setTemplateName(template_id, name)}
+        onClick={async() => handleUpdateTemplate.mutate({ id: template.id, name })}
       >
         <label className="label">
           <span className="label-text text-xs text-gray-500">
@@ -80,16 +94,16 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
         </label>
         <input
           type="text"
-          placeholder={workout_name}
+          placeholder={template.workout_name}
           className="input-bordered input-primary input input-sm w-full max-w-xs"
           onChange={(e) => setName(e.target.value)}
         />
       </Modal>
       <Modal
-        id={`delete-${template_id}`}
+        id={`delete-${template.id}`}
         title="Delete Template?"
         btnActionLabel="Delete"
-        onClick={() => deleteTemplate(template_id)}
+        onClick={async () => handleDeleteTemplate.mutate(template.id)}
       >
         <p>
           Are you sure you want to delete this template? This cannot be undone.
