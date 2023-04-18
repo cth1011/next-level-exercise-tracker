@@ -1,12 +1,14 @@
 import React from "react";
+import { UseMutateFunction } from "react-query";
 
 interface IModal {
   id: string;
   title: string;
   btnActionLabel?: string;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
 }
+
 
 const Modal = ({ id, btnActionLabel, title, onClick, children }: IModal) => (
   <div onClick={(e) => e.stopPropagation()}>
