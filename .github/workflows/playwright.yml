@@ -15,8 +15,6 @@ jobs:
           node-version: 19
       - name: Navigate to the test directory
         run: cd frontend
-      - name: List frontend directory
-        run: ls -la frontend
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
