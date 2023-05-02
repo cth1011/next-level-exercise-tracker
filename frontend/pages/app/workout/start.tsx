@@ -1,38 +1,63 @@
 import { useRouter } from "next/router";
 import ExerciseTemplate from "@/components/ExerciseTemplate";
 import Layout from "@/components/Layout";
-import Modal from "@/components/Modal";
-import { EDIT, NOT_STARTED } from "@/constants";
+import { EDIT, GUEST_EMAIL, NOT_STARTED } from "@/constants";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
-import MoreIcon from "@/icons/MoreIcon";
 import Exercises from "../exercises";
-import { useState } from "react";
+import { createTemplate, fetchExercises } from "@/hooks/api";
+import { QueryClient, dehydrate } from "react-query";
+import { GetStaticProps } from "next";
+import { createExercisePayload } from "@/lib/utils";
 
 const StartWorkout: React.FC = () => {
-  const [name, setName] = useState<string>("");
   const router = useRouter();
   const exercisePageStatus = useWorkoutStore(
     (state) => state.exercisePageStatus
   );
+  const workoutName = useWorkoutStore((state) => state.workoutName);
+  const resetWorkoutExercises = useWorkoutStore(
+    (state) => state.resetWorkoutExercises
+  );
   const setExercisePageStatus = useWorkoutStore(
     (state) => state.setExercisePageStatus
   );
-  const setWorkoutRename = useWorkoutStore((state) => state.setWorkoutRename);
+  const setWorkoutName = useWorkoutStore((state) => state.setWorkoutName);
   const setWorkoutStatus = useWorkoutStore((state) => state.setWorkoutStatus);
-  const workoutSession = useWorkoutStore((state) => state.workoutSession);
+  const workoutExercises = useWorkoutStore((state) => state.workoutExercises);
+
+  const handleSubmit = () => {
+    //TODO: Change email for user when authentication is fixed
+    createTemplate({
+      name: workoutName,
+      email: GUEST_EMAIL,
+      exercises: createExercisePayload(workoutExercises),
+    });
+    setWorkoutStatus(NOT_STARTED);
+    resetWorkoutExercises();
+    router.push("/app/workout");
+  };
 
   if (exercisePageStatus === EDIT) {
-    return <Exercises />;
+    return (
+      <div className="container mx-auto lg:max-w-4xl ">
+        <Exercises />
+      </div>
+    );
   }
   return (
     <Layout>
       <div className="text-gray-900">
         <div className="flex justify-between py-2">
           <div className="flex items-center">
-            <span className="text-lg font-bold ">
-              {workoutSession?.workout_name || "Workout maybe"}
-            </span>
-            <div className="dropdown dropdown-right">
+            <input
+              type="text"
+              placeholder={workoutName}
+              className="input-ghost input input-sm max-w-xs text-lg font-bold"
+              onChange={(e) => setWorkoutName(e.target.value)}
+              value={workoutName}
+            />
+            {/* TODO: Add Time Feature */}
+            {/* <div className="dropdown dropdown-right">
               <button
                 tabIndex={0}
                 type="button"
@@ -51,7 +76,7 @@ const StartWorkout: React.FC = () => {
                   <label htmlFor={`adjust`}>Adjust start/end time</label>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
           <button
             type="button"
@@ -61,10 +86,15 @@ const StartWorkout: React.FC = () => {
             Add Exercise
           </button>
         </div>
+
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 ">
-          {workoutSession?.exercises.map((exercise, index) => (
+          {[...workoutExercises].map(({ exercise_id, name, sets }, index) => (
             <div key={index} className="w-full">
-              <ExerciseTemplate exercise={exercise} />
+              <ExerciseTemplate
+                exercise_id={exercise_id}
+                name={name}
+                sets={sets}
+              />
             </div>
           ))}
         </div>
@@ -82,20 +112,22 @@ const StartWorkout: React.FC = () => {
             className="btn-outline no-animation btn w-full sm:w-[150px]"
             onClick={() => {
               setWorkoutStatus(NOT_STARTED);
+              resetWorkoutExercises();
               router.push("/app/workout");
             }}
           >
-            Cancel Workout
+            Cancel
           </button>
           <button
             type="button"
             className="btn-primary no-animation btn w-full sm:w-[150px]"
+            onClick={handleSubmit}
           >
             Finish
           </button>
         </div>
 
-        <Modal
+        {/* <Modal
           id={`rename`}
           title="Rename Workout"
           onClick={() => setWorkoutRename(name)}
@@ -107,14 +139,24 @@ const StartWorkout: React.FC = () => {
           </label>
           <input
             type="text"
-            placeholder={workoutSession?.workout_name || "Workout"}
+            placeholder={workoutExercises?.workout_name || "Workout"}
             className="input-bordered input-primary input input-sm w-full max-w-xs"
             onChange={(e) => setName(e.target.value)}
           />
-        </Modal>
+        </Modal> */}
       </div>
     </Layout>
   );
 };
 
 export default StartWorkout;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
+  await queryClient.fetchQuery(["exercises"], () => fetchExercises());
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
