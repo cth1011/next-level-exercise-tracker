@@ -3,43 +3,66 @@ import { StateCreator } from "zustand";
 import {
   Exercise,
   ExercisePageStatus,
-  Template,
+  WorkoutExercise,
   WorkoutStatus,
+  WorkoutSet,
 } from "@/types/session";
 import { EXERCISES, VIEW, NOT_STARTED } from "@/constants";
-
-import { TemplateState } from "./templateSlice";
 
 export type WorkoutState = {
   exercises: Exercise[];
   workoutStatus: WorkoutStatus;
   exercisePageStatus: ExercisePageStatus;
-  workoutSession?: Template | null;
+  workoutName: string;
+  workoutExercises: WorkoutExercise[];
   setExercisePageStatus: (status: ExercisePageStatus) => void;
   setWorkoutStatus: (status: WorkoutStatus) => void;
-  setWorkoutSession: (session: Template) => void;
-  setWorkoutRename: (newName: string) => void;
+  setWorkoutName: (name: string) => void;
+  setWorkoutExercise: (exercise: WorkoutExercise[]) => void;
+  resetWorkoutExercises: () => void;
+  addWorkoutSet: (exercise_id: number) => void;
 };
 
 export const createWorkoutSlice: StateCreator<
-  TemplateState & WorkoutState,
+  WorkoutState,
   [],
   [],
   WorkoutState
 > = (set) => ({
   exercises: EXERCISES,
   workoutStatus: NOT_STARTED,
+  workoutExercises: [],
   exercisePageStatus: VIEW,
-  workoutSession: null,
+  workoutName: "Workout",
   setExercisePageStatus: (status) =>
     set((state) => ({ ...state, exercisePageStatus: status })),
   setWorkoutStatus: (status) =>
     set((state) => ({ ...state, workoutStatus: status })),
-  setWorkoutSession: (session) =>
-    set((state) => ({ ...state, workoutSession: session })),
-  setWorkoutRename: (newName) =>
+  setWorkoutName: (name) => set((state) => ({ ...state, workoutName: name })),
+  setWorkoutExercise: (exercise) =>
     set((state) => ({
       ...state,
-      workoutSession: { ...state.workoutSession!, workout_name: newName },
+      workoutExercises: [...state.workoutExercises, ...exercise],
     })),
+  resetWorkoutExercises: () =>
+    set((state) => ({
+      ...state,
+      workoutExercises: [],
+      workoutName: "Workout",
+    })),
+  addWorkoutSet: (exercise_id) => {
+    set((state) => {
+      const newWorkoutExercises = state.workoutExercises.map((exercise) => {
+        if (exercise.exercise_id === exercise_id) {
+          const newSets = [
+            ...exercise.sets!,
+            { set_no: exercise.sets!.length + 1 },
+          ];
+          return { ...exercise, sets: newSets };
+        }
+        return exercise;
+      });
+      return { ...state, workoutExercises: newWorkoutExercises };
+    });
+  },
 });
