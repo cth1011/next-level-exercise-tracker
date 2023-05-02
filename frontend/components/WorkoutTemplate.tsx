@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query"
+import { useMutation, useQueryClient } from "react-query";
 import Link from "next/link";
 import MoreIcon from "@/icons/MoreIcon";
 import Modal from "./Modal";
@@ -8,29 +8,28 @@ import type { Template } from "@/types/session";
 import React from "react";
 import { useWorkoutStore } from "@/stores/useWorkoutStore";
 
-import {deleteTemplate, updateTemplate } from "@/hooks/useTemplates";
+import { deleteTemplate, updateTemplate } from "@/hooks/api";
 
 type Props = {
   template: Template;
   onClick: () => void;
 };
 
-
 const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [name, setName] = useState<string>(template.workout_name);
   const handleUpdateTemplate = useMutation({
     mutationFn: updateTemplate,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["templates"]})
-    }
-  })
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
+    },
+  });
   const handleDeleteTemplate = useMutation({
     mutationFn: deleteTemplate,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["templates"]})
-    }
-  })
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
+    },
+  });
   return (
     <div
       className="mb-2 h-full cursor-pointer rounded-lg border border-gray-300 bg-white py-2.5 pl-5 pr-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
@@ -73,19 +72,18 @@ const WorkoutTemplate: React.FC<Props> = ({ template, onClick }) => {
         )}
       </span>
       <span className="text-sm text-gray-500">
-        {template.exercises?.map(({ exercise, sets }, index) => {
-          console.log(exercise);
-          return (
-            <div key={index}>
-              {sets} x {exercise.name}
-            </div>
-          );
-        })}
+        {template.exercises?.map(({ exercise, sets }, index) => (
+          <div key={index}>
+            {sets} x {exercise.name}
+          </div>
+        ))}
       </span>
       <Modal
         id={`rename-${template.id}`}
         title="Rename Template"
-        onClick={async() => handleUpdateTemplate.mutate({ id: template.id, name })}
+        onClick={async () =>
+          handleUpdateTemplate.mutate({ id: template.id, name })
+        }
       >
         <label className="label">
           <span className="label-text text-xs text-gray-500">
