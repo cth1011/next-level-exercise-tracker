@@ -7,7 +7,7 @@ import {
   WorkoutStatus,
   WorkoutSet,
 } from "@/types/session";
-import { EXERCISES, VIEW, NOT_STARTED } from "@/constants";
+import {  VIEW, NOT_STARTED } from "@/constants";
 
 export type WorkoutState = {
   exercises: Exercise[];
@@ -29,7 +29,7 @@ export const createWorkoutSlice: StateCreator<
   [],
   WorkoutState
 > = (set) => ({
-  exercises: EXERCISES,
+  exercises: [],
   workoutStatus: NOT_STARTED,
   workoutExercises: [],
   exercisePageStatus: VIEW,
