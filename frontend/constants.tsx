@@ -1,12 +1,13 @@
 export const VIEW = "VIEW";
 export const EDIT = "EDIT";
+export const TEMPLATE_CREATION = "TEMPLATE_CREATION";
 export const IN_PROGRESS = "IN PROGRESS";
 export const NOT_STARTED = "NOT STARTED";
-
+export const GUEST_EMAIL = "guest@trial.com";
 export const MOCK_VALUES = [
   {
     template_id: 1,
-    workout_name: "Strength",
+    workout_name: "Yes",
     exercises: [
       {
         name: "Incline Hammer Curls",
